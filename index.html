@@ -1,12 +1,602 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="John Speller — Assistant Professor at Lodz University of Technology. Science communication, engineering education, course design and the humanities.">
   <title>John Speller</title>
+  <style>
+    :root {
+      --paper: #ffffff;
+      --paper-2: #f6f6f6;
+      --ink: #202020;
+      --muted: #676767;
+      --line: #dedede;
+      --accent: #981b2f;
+      --accent-soft: #f6e8eb;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.62;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .header-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+    }
+
+    .brand {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.3rem;
+      text-decoration: none;
+      letter-spacing: .01em;
+      white-space: nowrap;
+      color: var(--accent);
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 18px 24px;
+      font-size: .88rem;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--muted);
+    }
+
+    nav a:hover, nav a:focus { color: var(--accent); }
+
+    main {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    section {
+      padding: 88px 0;
+      border-bottom: 1px solid var(--line);
+      scroll-margin-top: 85px;
+    }
+
+    .hero {
+      min-height: 76vh;
+      display: grid;
+      grid-template-columns: minmax(280px, .8fr) minmax(360px, 1.35fr);
+      align-items: center;
+      gap: clamp(42px, 7vw, 100px);
+      padding-top: 72px;
+      padding-bottom: 72px;
+    }
+
+    .portrait-wrap {
+      max-width: 410px;
+    }
+
+    .portrait-wrap img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      object-position: center 22%;
+      border-radius: 2px;
+      filter: saturate(.9) contrast(.98);
+    }
+
+    h1, h2, h3 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 400;
+      margin-top: 0;
+    }
+
+    h1 {
+      font-size: clamp(3.2rem, 7vw, 6.8rem);
+      line-height: .98;
+      letter-spacing: -.045em;
+      margin-bottom: 34px;
+    }
+
+    h2 {
+      font-size: clamp(2rem, 4vw, 3.3rem);
+      letter-spacing: -.025em;
+      margin-bottom: 34px;
+    }
+
+    h3 {
+      font-size: 1.55rem;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    h2::after {
+      content: "";
+      display: block;
+      width: 54px;
+      height: 3px;
+      background: var(--accent);
+      margin-top: 16px;
+    }
+
+    .intro {
+      max-width: 720px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.2rem, 2.1vw, 1.55rem);
+      line-height: 1.55;
+      margin: 0;
+    }
+
+    .intro + .meta-line {
+      margin-top: 28px;
+    }
+
+    .meta-line {
+      color: var(--muted);
+      font-size: .95rem;
+    }
+
+    .section-grid {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 52px;
+    }
+
+    .section-label {
+      font-size: .77rem;
+      text-transform: uppercase;
+      letter-spacing: .15em;
+      color: var(--accent);
+      padding-top: 10px;
+    }
+
+    .profile-copy {
+      max-width: 790px;
+      font-size: 1.07rem;
+    }
+
+    .profile-copy p:first-child {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.34rem;
+      line-height: 1.55;
+      margin-top: 0;
+    }
+
+    .books {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 34px;
+    }
+
+    .book {
+      display: grid;
+      grid-template-columns: 190px 1fr;
+      gap: 28px;
+      background: #ffffff;
+      border: 1px solid var(--line);
+      padding: 24px;
+      min-height: 370px;
+    }
+
+    .cover {
+      aspect-ratio: 2 / 3;
+      padding: 22px 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 10px 24px rgba(0,0,0,.07);
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    .cover.scicomm {
+      background: #f5f0ee;
+      color: #1f2727;
+      border-top: 8px solid var(--accent);
+    }
+
+    .cover.bourdieu {
+      background: #171717;
+      color: #f7f5ef;
+      border-top: 8px solid #ece9e0;
+    }
+
+    .cover-title {
+      font-size: 1.34rem;
+      line-height: 1.15;
+    }
+
+    .cover-author {
+      font-size: .78rem;
+      letter-spacing: .04em;
+    }
+
+    .book-copy {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .book-copy p {
+      color: var(--muted);
+      margin: 0 0 18px;
+    }
+
+    .book-copy .book-meta {
+      font-size: .78rem;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .book-actions {
+      margin-top: auto;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .button {
+      display: inline-block;
+      border: 1px solid var(--accent);
+      padding: 9px 14px;
+      text-decoration: none;
+      font-size: .86rem;
+      transition: .2s ease;
+    }
+
+    .button {
+      color: var(--accent);
+    }
+
+    .button:hover, .button:focus {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .button.secondary {
+      border-color: var(--line);
+      color: var(--muted);
+    }
+
+    .button.secondary:hover, .button.secondary:focus {
+      background: var(--paper-2);
+      color: var(--ink);
+    }
+
+    .project-list, .teaching-list, .pub-list {
+      border-top: 1px solid var(--line);
+    }
+
+    .project, .teaching-item, .pub-item {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 28px;
+      padding: 28px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .eyebrow {
+      color: var(--accent);
+      font-size: .75rem;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      padding-top: 4px;
+    }
+
+    .project p, .teaching-item p, .pub-item p {
+      margin: 7px 0 0;
+      max-width: 760px;
+      color: var(--muted);
+    }
+
+
+    .profile-copy a,
+    .project a,
+    .teaching-item a,
+    .pub-item a,
+    .contact-box a {
+      color: var(--accent);
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+
+    .contact-box {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 42px;
+      max-width: 800px;
+    }
+
+    .contact-box p { margin: 0 0 10px; }
+
+    footer {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 30px 32px 46px;
+      color: var(--muted);
+      font-size: .82rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    @media (max-width: 900px) {
+      .header-inner { align-items: flex-start; }
+      nav { gap: 10px 16px; }
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .portrait-wrap { max-width: 320px; }
+      .section-grid { grid-template-columns: 1fr; gap: 20px; }
+      .books { grid-template-columns: 1fr; }
+      .book { grid-template-columns: 160px 1fr; }
+    }
+
+    @media (max-width: 650px) {
+      .header-inner {
+        padding: 15px 20px;
+        display: block;
+      }
+      nav {
+        justify-content: flex-start;
+        margin-top: 12px;
+        gap: 8px 14px;
+      }
+      main { padding: 0 20px; }
+      section { padding: 64px 0; }
+      .hero { padding-top: 46px; }
+      .book { grid-template-columns: 1fr; }
+      .cover { max-width: 210px; }
+      .project, .teaching-item, .pub-item { grid-template-columns: 1fr; gap: 8px; }
+      .contact-box { grid-template-columns: 1fr; gap: 16px; }
+      footer { padding-left: 20px; padding-right: 20px; display: block; }
+    }
+  </style>
 </head>
 <body>
-  <h1>John Speller</h1>
-  <p>Science Communication · Engineering Education · Digital Learning</p>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="#top">John Speller</a>
+    <nav aria-label="Primary navigation">
+      <a href="#profile">Profile</a>
+      <a href="#books">Books</a>
+      <a href="#research">Research &amp; Projects</a>
+      <a href="#teaching">Teaching</a>
+      <a href="#publications">Publications</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="portrait-wrap">
+      <img src="john-speller.jpg" alt="Portrait of John Speller">
+    </div>
+    <div>
+      <h1>John<br>Speller</h1>
+      <p class="intro">
+        I am an Assistant Professor at the Language Centre, Lodz University of Technology.
+        My work brings together science communication, engineering education, course design
+        and the humanities.
+      </p>
+      <p class="meta-line">Łódź, Poland</p>
+    </div>
+  </section>
+
+  <section id="profile">
+    <div class="section-grid">
+      <div class="section-label">Profile</div>
+      <div class="profile-copy">
+        <h2>Profile</h2>
+        <p>
+          I work at the intersection of communication, education and the cultures of science
+          and engineering.
+        </p>
+        <p>
+          At Lodz University of Technology, I design and teach courses for science and
+          engineering students, with a particular interest in science communication,
+          academic and technical communication, digital learning, and the role of the
+          humanities in engineering education. I hold a PhD in Sociology from the
+          University of Warwick.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="books">
+    <div class="section-grid">
+      <div class="section-label">Books</div>
+      <div>
+        <h2>Books</h2>
+        <div class="books">
+
+          <article class="book">
+            <div class="cover scicomm" aria-label="English for Science Communication">
+              <div class="cover-title">English for<br>Science<br>Communication</div>
+              <div class="cover-author">John Speller</div>
+            </div>
+            <div class="book-copy">
+              <div class="book-meta">Coursebook</div>
+              <h3>English for Science Communication</h3>
+              <p>
+                A practical coursebook exploring how scientific and technical ideas can be
+                explained clearly, engagingly and responsibly for different audiences and
+                across different media.
+              </p>
+              <div class="book-actions">
+                <a class="button" href="https://heyzine.com/flip-book/4cfd249be9.html" target="_blank" rel="noopener">Read online</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="book">
+            <div class="cover bourdieu" aria-label="Bourdieu and Literature">
+              <div class="cover-title">Bourdieu<br>and<br>Literature</div>
+              <div class="cover-author">John R. W. Speller</div>
+            </div>
+            <div class="book-copy">
+              <div class="book-meta">Open Book Publishers · 2026</div>
+              <h3>Bourdieu and Literature</h3>
+              <p>
+                A revised and corrected study of Pierre Bourdieu's engagement with
+                literature and the contribution of his work to literary theory,
+                sociology and cultural analysis.
+              </p>
+              <div class="book-actions">
+                <a class="button" href="https://www.openbookpublishers.com/books/10.11647/obp.0522" target="_blank" rel="noopener">Read / download</a>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="research">
+    <div class="section-grid">
+      <div class="section-label">Research &amp; Projects</div>
+      <div>
+        <h2>Research &amp; Projects</h2>
+        <div class="project-list">
+
+          <article class="project">
+            <div class="eyebrow">In development</div>
+            <div>
+              <h3>The Engineering Imagination</h3>
+              <p>
+                A developing European initiative exploring how literature, history,
+                philosophy, art and technological narratives can contribute to engineering
+                education and help students think more imaginatively about technological
+                choices, alternatives and consequences.
+              </p>
+            </div>
+          </article>
+
+          <article class="project">
+            <div class="eyebrow">Current research</div>
+            <div>
+              <h3>Science Communication and Digital Transformation</h3>
+              <p>
+                Work examining digital transformation in engineering education as a
+                communicative problem: how disciplinary knowledge is selected, represented,
+                visualised and made accessible across digital and multimodal environments.
+              </p>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="teaching">
+    <div class="section-grid">
+      <div class="section-label">Teaching</div>
+      <div>
+        <h2>Teaching</h2>
+        <div class="teaching-list">
+
+          <article class="teaching-item">
+            <div class="eyebrow">Lodz University of Technology</div>
+            <div>
+              <h3>English for Science Communication</h3>
+              <p>
+                A workshop-based course for second-cycle students focused on communicating
+                science and engineering effectively to different audiences.
+              </p>
+            </div>
+          </article>
+
+          <article class="teaching-item">
+            <div class="eyebrow">Course design</div>
+            <div>
+              <h3>Study Skills for University</h3>
+              <p>
+                An undergraduate course combining academic study skills, scientific
+                reasoning, communication, teamwork and practical project work.
+              </p>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="publications">
+    <div class="section-grid">
+      <div class="section-label">Publications</div>
+      <div>
+        <h2>Selected Publications</h2>
+        <div class="pub-list">
+          <article class="pub-item">
+            <div class="eyebrow">2026 · Book</div>
+            <div>
+              <h3><em>Bourdieu and Literature</em></h3>
+              <p>
+                Revised and corrected edition. Open Book Publishers.
+                <a href="https://www.openbookpublishers.com/books/10.11647/obp.0522" target="_blank" rel="noopener">Publisher page →</a>
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="section-grid">
+      <div class="section-label">Contact</div>
+      <div>
+        <h2>Contact</h2>
+        <div class="contact-box">
+          <div>
+            <p><strong>John Speller</strong></p>
+            <p>Language Centre<br>Lodz University of Technology</p>
+          </div>
+          <div>
+            <p><a href="mailto:john.speller@p.lodz.pl">john.speller@p.lodz.pl</a></p>
+            <p><a href="https://ife.edu.p.lodz.pl/user/view.php?course=1&amp;id=2071" target="_blank" rel="noopener">University profile ↗</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <span>© John Speller</span>
+  <span>Built as a static site on GitHub Pages.</span>
+</footer>
+
 </body>
 </html>
